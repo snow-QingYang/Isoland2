@@ -14,7 +14,7 @@ public class TransitionManager : Singleton<TransitionManager>
     {
         yield return SceneManager.UnloadSceneAsync(from);
         yield return SceneManager.LoadSceneAsync(to,LoadSceneMode.Additive);
-        Scene newScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+        Scene newScene = SceneManager.GetSceneByName(to);
         SceneManager.SetActiveScene(newScene);
     }
 }

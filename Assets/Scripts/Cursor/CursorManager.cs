@@ -1,19 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CursorManager : MonoBehaviour
 {
     private Vector3 mouseWorldPos => Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,0));
+
     private bool canClick;
     private void Update()
     {
-        canClick = ObjectAtMousePosition();
-        if (canClick &&Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            clickAction(ObjectAtMousePosition().gameObject);
+            if (ObjectAtMousePosition() != null)
+            {
+                clickAction(ObjectAtMousePosition().gameObject);
+            }
         }
+       
     }
+    /// <summary>
+    /// 鼠标点击事件
+    /// </summary>
+    /// <param name="clickObject"></param>
     private void clickAction(GameObject clickObject)
     {
         switch(clickObject.tag)

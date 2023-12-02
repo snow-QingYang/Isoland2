@@ -31,6 +31,10 @@ public class CursorManager : MonoBehaviour
                 var teleport =clickObject.GetComponent<Teleport>();
                 teleport?.teleportToScene();
                 break;
+            case "Item":
+                var item =clickObject.GetComponent<Item>();
+                item?.itemClicked();
+                break;
         }
     }
     /// <summary>

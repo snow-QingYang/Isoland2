@@ -10,5 +10,16 @@ public static class EventHandler
     {
         UpdateUIEvent?.Invoke(itemDetails, index);
     }
+    public static event Action BeforeSceneUnloadedEvent;
+    public static void CallBeforeSceneUnloaded()
+    {
+        BeforeSceneUnloadedEvent?.Invoke();
+    }
+    public static Action AfterSceneLoadedEvent;
+    public static void CallAfterScenLoaded() 
+    { 
+        AfterSceneLoadedEvent?.Invoke();
+    }
+
 }
 

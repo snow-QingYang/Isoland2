@@ -18,10 +18,12 @@ public class TransitionManager : Singleton<TransitionManager>
     private IEnumerator  TransitionToScene(string from, string to)
     {
         yield return Fade(1);
+        EventHandler.CallBeforeSceneUnloaded();
         yield return SceneManager.UnloadSceneAsync(from);
         yield return SceneManager.LoadSceneAsync(to,LoadSceneMode.Additive);
         Scene newScene = SceneManager.GetSceneByName(to);
         SceneManager.SetActiveScene(newScene);
+        EventHandler.AfterSceneLoadedEvent();
         yield return Fade(0);
     }
     /// <summary>

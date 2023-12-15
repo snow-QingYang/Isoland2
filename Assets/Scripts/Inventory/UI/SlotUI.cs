@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class SlotUI : MonoBehaviour
 {
-    public UnityEngine.UI.Image itemImage;
+    public Image itemImage;
     private ItemDetails currentItem;
+    private bool isSelected;
     public void SetItem(ItemDetails item)
     {
         currentItem = item;

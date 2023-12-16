@@ -7,6 +7,8 @@ public class ObjectManager : MonoBehaviour
 {
     private Dictionary<ItemName, bool> itemAvailableList = new Dictionary<ItemName, bool>();
 
+    private Dictionary<string, bool> interactiveStateList = new Dictionary<string, bool>();
+
     private void OnEnable()
     {
         EventHandler.BeforeSceneUnloadedEvent += OnBeforeSceneUnloaded;
@@ -31,21 +33,33 @@ public class ObjectManager : MonoBehaviour
                 itemAvailableList.Add(item.Name, true);
             }
         }
+        foreach(var item in FindObjectsOfType<Interactive>())
+        {
+            if (interactiveStateList.ContainsKey(item.name))
+                interactiveStateList[item.name] = item.isDone;
+            else
+                interactiveStateList.Add(item.name, item.isDone);
+        }
     }
     private void OnAfterSceneLoaded()
     {
-        foreach(var item in FindObjectsOfType<Item>())
+        foreach (var item in FindObjectsOfType<Item>())
         {
-            if(!itemAvailableList.ContainsKey(item.Name))
-            {
+            if (!itemAvailableList.ContainsKey(item.Name))
                 itemAvailableList.Add(item.Name, true);
-            }
             else
-            {
                 item.gameObject.SetActive(itemAvailableList[item.Name]);
-            }
 
         }
+            foreach (var item in FindObjectsOfType<Interactive>())
+            {
+                if (interactiveStateList.ContainsKey(item.name))
+                    item.isDone = interactiveStateList[item.name];
+                else
+                    interactiveStateList.Add(item.name, item.isDone);
+            }
+
+        
     }
     private void OnUpdateUIEvent(ItemDetails details, int arg2)
     {

@@ -25,5 +25,11 @@ public static class EventHandler
     {
         ItemSelectedEvent?.Invoke(itemDetails, isSelected);
     }
+
+    public static event Action<ItemName> ItemUsedEvent;
+    public static void CallItemUsed(ItemName name)
+    {
+        ItemUsedEvent?.Invoke(name);
+    }
 }
 

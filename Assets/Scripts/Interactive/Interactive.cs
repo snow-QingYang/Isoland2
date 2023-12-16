@@ -13,6 +13,7 @@ public class Interactive : MonoBehaviour
         {
             isDone = true;
             OnClickedAction();
+            EventHandler.CallItemUsed(name);
         }
     }
     /// <summary>

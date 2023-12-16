@@ -25,6 +25,7 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         isSelected = !isSelected;
         EventHandler.CallItemSelected(currentItem, isSelected);
+
     }
 
     public void OnPointerEnter(PointerEventData eventData)

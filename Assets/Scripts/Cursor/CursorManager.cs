@@ -16,13 +16,20 @@ public class CursorManager : MonoBehaviour
     private void OnEnable()
     {
         EventHandler.ItemSelectedEvent += OnItemSelectedEvent;
+        EventHandler.ItemUsedEvent += OnItemUsed;
     }
 
-
+    private void OnItemUsed(ItemName name)
+    {
+        currentItem = ItemName.None;
+        isHoldItem = false;
+        Hand.gameObject.SetActive(false);
+    }
 
     private void OnDisable()
     {
         EventHandler.ItemSelectedEvent -= OnItemSelectedEvent;
+        EventHandler.ItemUsedEvent -= OnItemUsed;
     }
     private void Update()
     {

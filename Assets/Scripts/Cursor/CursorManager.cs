@@ -7,9 +7,27 @@ public class CursorManager : MonoBehaviour
 {
     private Vector3 mouseWorldPos => Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,Input.mousePosition.y,0));
 
+    private ItemName currentItem;
+
+    public RectTransform Hand;
+
+    private bool isHoldItem;
     private bool canClick;
+    private void OnEnable()
+    {
+        EventHandler.ItemSelectedEvent += OnItemSelectedEvent;
+    }
+
+
+
+    private void OnDisable()
+    {
+        EventHandler.ItemSelectedEvent -= OnItemSelectedEvent;
+    }
     private void Update()
     {
+        if (Hand.gameObject.activeInHierarchy)
+            Hand.position = Input.mousePosition;
         if (Input.GetMouseButtonDown(0))
         {
             if (ObjectAtMousePosition() != null)
@@ -18,6 +36,15 @@ public class CursorManager : MonoBehaviour
             }
         }
        
+    }
+    private void OnItemSelectedEvent(ItemDetails details, bool isSelected)
+    {
+        isHoldItem = isSelected;
+        if(isSelected)
+        {
+            currentItem = details.itemName;
+        }
+        Hand.gameObject.SetActive(isHoldItem);
     }
     /// <summary>
     /// 鼠标点击事件
@@ -34,6 +61,15 @@ public class CursorManager : MonoBehaviour
             case "Item":
                 var item =clickObject.GetComponent<Item>();
                 item?.itemClicked();
+                break;
+            case "Interactive":
+                var interactive = clickObject.GetComponent<Interactive>();
+                if (isHoldItem)
+                    interactive?.CheckItem(currentItem);
+                else
+                {
+                    interactive?.EmptyClicked();
+                }
                 break;
         }
     }

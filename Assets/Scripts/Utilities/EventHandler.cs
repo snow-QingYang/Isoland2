@@ -15,11 +15,15 @@ public static class EventHandler
     {
         BeforeSceneUnloadedEvent?.Invoke();
     }
-    public static Action AfterSceneLoadedEvent;
-    public static void CallAfterScenLoaded() 
+    public static event Action AfterSceneLoadedEvent;
+    public static void CallAfterSceneLoaded() 
     { 
         AfterSceneLoadedEvent?.Invoke();
     }
-
+    public static event Action<ItemDetails, bool> ItemSelectedEvent;
+    public static void CallItemSelected(ItemDetails itemDetails, bool isSelected)
+    {
+        ItemSelectedEvent?.Invoke(itemDetails, isSelected);
+    }
 }
 
